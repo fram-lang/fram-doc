@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # To push a branch 
+      pages: write     # To push to a GitHub Pages site
+      id-token: write  # To update the deployment status
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install mdbook
+        run: |
+          ver='v0.4.40'
+          url="https://github.com/rust-lang/mdBook/releases/download/${ver}/mdbook-${ver}-x86_64-unknown-linux-gnu.tar.gz"
+          mkdir mdbook
+          echo "${PWD}/mdbook" >> "$GITHUB_PATH"
+          curl -sSL "$url" | tar -xz --directory=mdbook
+      - name: Install mdbook-katex
+        run: |
+          ver='0.9.0'
+          url="https://github.com/lzanini/mdbook-katex/releases/download/${ver}-binaries/mdbook-katex-v${ver}-x86_64-unknown-linux-gnu.tar.gz"
+          mkdir mdbook-katex
+          echo "${PWD}/mdbook-katex" >> "$GITHUB_PATH"
+          curl -sSL "$url" | tar -xz --directory=mdbook-katex
+      - name: Build the site
+        run: mdbook build
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'book'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
