@@ -1,0 +1,7 @@
+[book]
+title = "The Fram Language"
+description = "The documentation for the Fram programming language."
+language = "en"
+
+[preprocessor.katex]
+after = ["links"]
