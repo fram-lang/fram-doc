@@ -5,3 +5,6 @@ language = "en"
 
 [preprocessor.katex]
 after = ["links"]
+
+[output.html]
+additional-js = ["js/highlight-fram.js"]
