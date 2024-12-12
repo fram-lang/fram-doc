@@ -1,6 +1,9 @@
 name: Deploy to GitHub Pages
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   deploy:
@@ -36,4 +39,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
