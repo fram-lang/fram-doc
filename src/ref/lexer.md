@@ -40,7 +40,7 @@ recognized by some external tools.
 ### Examples
 
 The following code contains some valid comments.
-```fram
+````fram
 # This is a single-line comment.
 {# This is a block comment. #}
 {# Block comments
@@ -80,7 +80,7 @@ let some_code = 42
 ```
 ###}
 let baz = bar
-```
+````
 
 ## Literals
 
