@@ -17,11 +17,12 @@ Single-line comments start with the `#` character and end with a new line or
 the end of file.
 
 Block comments are introduced by the sequence `{#` followed by any, possibly
-empty, sequence *name* of alphanumeric, `_`, and `#` characters. Such a block
+empty, sequence *name* of any characters except control characters
+(`0x00-0x1f`, `0x7f`), space, and curly braces (`{` and `}`). Such a block
 comment is terminated by the first occurrence of *name* that is immediately
 followed by `#}`. More precisely, it can be described by the following grammar.
 ```bnf
-block-comment-name  ::= { "a"..."z" | "A"..."Z" | "0"..."9" | "_" | "#" }
+block-comment-name  ::= { "!"..."z" | "|" | "~" | non-ascii-character }
 block-comment-start ::= "{#" block-comment-name
 block-comment-end   ::= block-comment-name "#}"
 ```
@@ -51,6 +52,8 @@ let n {# A block comment may span a part of a single line. #} = 42
 Comments cannot be nested,
 {# but the programmer may choose the comment delimiters. #}
 aaa#}
+
+{#!a! Comment names may contain operators. !a!#}
 
 {#abc
 This comment is ended by `abc` immediately followed by `#}`,
