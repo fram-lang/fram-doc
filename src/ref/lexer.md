@@ -75,7 +75,7 @@ let bar = foo
 {###
 Documentation comments can contain some code
 ```
-{## with another documentation comment (with a different name). #}}
+{## with another documentation comment (with a different name). ##}
 let some_code = 42
 ```
 ###}
