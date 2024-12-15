@@ -17,17 +17,16 @@ Single-line comments start with the `#` character and end with a new line or
 the end of file.
 
 Block comments are introduced by the sequence `{#` followed by any, possibly
-empty, sequence *name* of valid identifier characters, operators, and
-`#` characters. Such a block comment is terminated by the first occurrence of
-*name* that is immediately followed by `#}`. More precisely, it can be
-described by the following grammar.
+empty, sequence *name* of any characters except control characters
+(`0x00-0x1f`, `0x7f`), space, and curly braces (`{` and `}`). Such a block
+comment is terminated by the first occurrence of *name* that is immediately
+followed by `#}`. More precisely, it can be described by the following grammar.
 ```bnf
-block-comment-name  ::= { ident-char | op-char | "#" }
+block-comment-name  ::= { "!"..."z" | "|" | "~" | non-ascii-character }
 block-comment-start ::= "{#" block-comment-name
 block-comment-end   ::= block-comment-name "#}"
 ```
-Non-terminal symbols `ident-char` and `op-char` are defined later in this
-chapter. At the comment opening, the longest consecutive sequence described by
+At the comment opening, the longest consecutive sequence described by
 `block-comment-name` is taken as the comment name. This name should be a suffix
 of the name provided at comment closing. Comments using the same name cannot
 be nested. This is not an issue in practice, since the programmer can always
