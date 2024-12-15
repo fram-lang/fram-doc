@@ -11,7 +11,7 @@ hljs.registerLanguage("fram", function (hljs) {
       });
   }
 
-  const COMMENT_NAME = "([a-zA-Z<>&\\$\\?!@\\^\\+\\-~\\*%;,=|:\\.\\/#]*)";
+  const COMMENT_NAME = "([\\w'<>&$?!@^+\\-~*%;,=|:./#]*)";
 
   return {
     keywords: {
@@ -28,7 +28,7 @@ hljs.registerLanguage("fram", function (hljs) {
       MATCH_BEGIN_END(hljs.COMMENT("{#" + COMMENT_NAME, COMMENT_NAME + "#}")),
       {
         className: "type",
-        begin: "\\b[A-Z]\\w*",
+        begin: "\\b[A-Z][\\w']*",
       },
       {
         className: "number",
