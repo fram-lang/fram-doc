@@ -11,7 +11,7 @@ hljs.registerLanguage("fram", function (hljs) {
       });
   }
 
-  const COMMENT_NAME = "([\\w#]*)";
+  const COMMENT_NAME = "([^\\x00-\\x20{}\\x7f]*)";
 
   return {
     keywords: {
