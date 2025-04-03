@@ -6,6 +6,11 @@
 
 - [Installation](intro/installation.md)
 - [Getting Started](intro/getting-started.md)
+- [Named Parameters](intro/named-parameters.md)
+- [Data Types](intro/data-types.md)
+- [Modules](intro/modules.md)
+- [Effect Handlers](intro/effect-handlers.md)
+- [Case Study: Implementation of Prolog](intro/case-study-prolog.md)
 
 # Fram Language Reference
 
