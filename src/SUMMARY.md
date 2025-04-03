@@ -20,3 +20,9 @@
 # Fram Standard Library
 
 - [`Prelude`](lib/prelude.md)
+
+# Fram Programming Conventions
+
+- [General](conv/general.md)
+- [Naming](conv/naming.md)
+- [Code Formatting](conv/code-formatting.md)
