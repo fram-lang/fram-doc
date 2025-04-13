@@ -80,7 +80,7 @@ let rotate shape =
 
 Patterns of different clauses within the same `match` construct may overlap.
 In this case, the first matching clause is used. Provided patterns must be
-*exhaustive*, i.e. eacho of possible values of the matched expression must be
+*exhaustive*, i.e. each of possible values of the matched expression must be
 covered by at least one pattern.
 
 Fram allows to use pattern in almost any place where a variable binder can be
