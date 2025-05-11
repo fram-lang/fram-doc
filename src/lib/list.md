@@ -2,7 +2,7 @@
 
 The list module implements a multitude of list methods and functions. 
 
-## Avaible methods
+## Avaible functions
 
 ---
 `isEmpty xs ('a List -> Bool)` - is xs an empty list
@@ -161,3 +161,59 @@ onError () if lists are of different lengths, just a normal foldRight2 otherwise
 
 ---
 `equal xs ys ((List E) -> (List E) -> Bool)` - Element-wise equality on lists. E must have an 'equal' method. False if lists are of different lengths.
+
+### Methods
+
+Methods are defined in terms of function in this way
+```
+{# method versions of these functions #}
+parameter ~onError
+
+pub method isEmpty = isEmpty
+pub method length = length
+pub method hd = hd
+pub method hdErr = hdErr
+pub method tl = tl
+pub method tlErr = tlErr
+pub method nth = nth
+pub method nthErr = nthErr
+pub method append = append
+pub method add = append
+pub method revAppend = revAppend
+pub method rev = rev
+pub method concat = concat
+pub method map self f = map f self
+pub method mapi self f = mapi f self
+pub method revMapAppend self f ys = revMapAppend f self ys
+pub method revMap self f = revMap f self
+pub method filter self p = filter p self
+pub method filteri self p = filteri p self
+pub method filterMap self f = filterMap f self
+pub method concatMap self f = concatMap f self
+pub method drop self n = drop n self
+pub method takeWhile self p = takeWhile p self
+pub method dropWhile self p = dropWhile p self
+pub method iter self f = iter f self
+pub method iteri self f = iteri f self
+pub method foldLeft self f acc = foldLeft f acc self
+pub method foldRight self f acc = foldRight f self acc
+pub method forAll self p = forAll p self
+pub method exists self p = exists p self
+pub method find self p = find p self
+pub method findErr self p = findErr p self
+pub method findIndex self p = findIndex p self
+pub method findIndexErr self p = findIndexErr p self
+pub method findMap self f = findMap f self
+pub method findMapErr self f = findMapErr f self
+pub method findMapi self f = findMapi f self
+pub method findMapiErr self f = findMapiErr f self
+pub method foldLeftMap self f acc = foldLeftMap f acc self
+pub method foldLeftFilterMap self f acc = foldLeftFilterMap f acc self
+pub method foldLeftConcatMap self f acc = foldLeftConcatMap f acc self
+pub method mem { E, method equal : E -> E ->[] Bool } self v =
+  mem {E} v self
+pub method equal { E, method equal : E -> E ->[] Bool } self xs =
+  equal {E} self xs
+pub method neq { E, method equal : E -> E ->[] Bool } self xs =
+  not (equal {E} self xs)
+```
