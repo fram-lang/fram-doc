@@ -20,6 +20,7 @@
 # Fram Standard Library
 
 - [`Prelude`](lib/prelude.md)
+- [`List`](lib/list.md)
 
 # Fram Programming Conventions
 
