@@ -188,9 +188,9 @@ cascadely passed to other functions which also take implicit parameters.
 
 ```fram
 let doMore {~log} () =
-  ~log "Starting doMore";
+  ~log "Starting doing more";
   let result = doSomething () in
-  ~log "Finished doMore";
+  ~log "Finished doing more";
   result
 ```
 
@@ -204,6 +204,77 @@ let doSomethingElse {~log=logger} () =
 ```
 
 ## Sections
+
+When programming with named parameters, especially implicit parameters, often
+the same named parameters are passed repeatedly to multiple functions. To
+avoid such boilerplate code, Fram supports *sections*, which allow grouping
+definitions with common named parameters. A named parameter can be declared
+at any point within a section using `parameter` keyword, and will be added
+to the type schemes of all following definitions that use this parameter.
+In particular, declared implicit parameter behaves similarly to dynamically
+bound variables in Lisp-like languages, but in a type-safe manner.
+
+```fram
+parameter ~log : String ->> Unit
+
+let doSomething () =
+  ~log "Doing something important!";
+  let result = 42 in
+  ~log "Something important is done.";
+  result
+
+let doMore () =
+  ~log "Starting doing more";
+  let result = doSomething () in
+  ~log "Finished doing more";
+  result
+
+let doMoreTwice () =
+  doMore ();
+  doMore ()
+
+let doAllIgnoringLogging () =
+  let ~log msg = () in
+  doSomething ();
+  doMoreTwice ()
+```
+
+In the above example, functions `doSomething`, `doMore`, and `doMoreTwice` use
+the implicit parameter `~log` directly or indirectly, so their type schemes
+include `~log` parameter. On the other hand, `doAllIgnoringLogging` doesn't
+have `~log` parameter, because it doesn't use it in its body: it defines a
+local `~log` that shadows the implicit parameter. The parameter construct can
+also be used to declare other kinds of named parameters. For instance, this
+mechanism can be used to name type parameters, but keep the code concise.
+
+```fram
+parameter Elem
+parameter Acc
+
+let rec foldLeft (f : Acc -> Elem ->> Acc) acc xs =
+  match xs with
+  | []       => acc
+  | y :: ys  => foldLeft f (f acc y) ys
+  end
+```
+
+The scope of a parameter declaration extends to the end of the current
+section. In most cases it is the end of the current file or module. For local
+definitions within a function body, the scope of parameter declaration extends
+to the `in` keyword that ends the block of local definitions.
+
+```fram
+let foo {~log} () =
+  parameter ~log : String ->> Unit
+  # the following two definitions have ~log parameter
+  let bar () = ~log "In bar"
+  let baz () = ~log "In baz"; bar ()
+  in
+  # the following definition does not have ~log parameter
+  # The ~log here refers to the parameter of foo
+  let quux () = ~log "In quux" in
+  bar ()
+```
 
 ## Rank-N Types and Higher-Order Functions
 
