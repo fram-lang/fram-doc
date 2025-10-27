@@ -3,7 +3,7 @@
 The mechanism of named parameters is one of the central features of the Fram
 programming language. With the support of other language constructs, named
 parameters are used to express a variety of advanced programming features,
-such parametric polymorphism, existential types, record types, and ML-like
+such as parametric polymorphism, existential types, record types, and ML-like
 module system. Here we give a brief overview of named parameters in Fram.
 
 ## Parametric Polymorphism and Type Schemes
@@ -52,7 +52,7 @@ The type scheme of `const` is `{type A, type B} -> A -> B -> A`.
 ## Named Type Parameters
 
 Type parameters presented in previous section are *anonymous*, i.e., their
-names are not visible outside the definition. Indeed, the programmer have no
+names are not visible outside the definition. Indeed, the programmer has no
 means to specify the names of type parameters implicitly introduced by ML-style
 type inference. However, Fram also supports *named type parameters*, which
 can be explicitly specified by the programmer. To specify a named type
@@ -156,7 +156,7 @@ let msg4 = greet {?name=Some "Bob"} () # name is Some "Bob"
 ## Implicit Parameters
 
 Another useful feature of named parameters in Fram is *implicit parameters*.
-Implicit parameters comes together with a special namespace for variables,
+Implicit parameters come together with a special namespace for variables,
 that have names starting with a tilde (`~`). Name of implicit parameters also
 start with a tilde, and if not stated otherwise, they bind variables with the
 same names. Implicit parameters can be omitted when the function is used. In
@@ -182,9 +182,10 @@ let doWithoutLogging () =
   doSomething ()       # compiler uses the local ~log
 ```
 
-When function takes a implicit parameter, it introduces it into the implicit
-namespace for the body of the function. Therefore, implicit parameters can be
-cascadely passed to other functions which also take implicit parameters.
+When a function takes an implicit parameter, it introduces it into the
+implicit namespace for the body of the function. Therefore, implicit
+parameters can be transitively passed to other functions which also take
+implicit parameters.
 
 ```fram
 let doMore {~log} () =
