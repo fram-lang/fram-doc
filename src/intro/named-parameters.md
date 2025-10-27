@@ -155,6 +155,54 @@ let msg4 = greet {?name=Some "Bob"} () # name is Some "Bob"
 
 ## Implicit Parameters
 
+Another useful feature of named parameters in Fram is *implicit parameters*.
+Implicit parameters comes together with a special namespace for variables,
+that have names starting with a tilde (`~`). Name of implicit parameters also
+start with a tilde, and if not stated otherwise, they bind variables with the
+same names. Implicit parameters can be omitted when the function is used. In
+such a case, the compiler resolves the value of the parameter by searching for
+a variable with the same name in the current scope.
+
+```fram
+let doSomething {~log : String ->> Unit} () =
+  ~log "Doing something important!";
+  let result = 42 in
+  ~log "Something important is done.";
+  result
+```
+
+To call a function which has implicit parameters, the programmer can either
+specify the value of the parameter explicitly, or define a variable with the
+same name in the current scope.
+
+```fram
+let _ = doSomething {~log=printStrLn} ()
+let doWithoutLogging () =
+  let ~log msg = () in # define a no-op logger
+  doSomething ()       # compiler uses the local ~log
+```
+
+When function takes a implicit parameter, it introduces it into the implicit
+namespace for the body of the function. Therefore, implicit parameters can be
+cascadely passed to other functions which also take implicit parameters.
+
+```fram
+let doMore {~log} () =
+  ~log "Starting doMore";
+  let result = doSomething () in
+  ~log "Finished doMore";
+  result
+```
+
+Same as with other named parameters, the programmer may bind an implicit
+parameter to a different name to avoid name clashes. A binder {~name} is just
+a syntactic sugar for {~name=~name}.
+
+```fram
+let doSomethingElse {~log=logger} () =
+  logger "Doing something else"
+```
+
 ## Sections
 
 ## Rank-N Types and Higher-Order Functions
