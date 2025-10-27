@@ -291,7 +291,7 @@ following function takes a function with named parameters as an argument and
 applies it.
 
 ```fram
-let bar (f : {X, x : X} -> (X -> _) -> _) =
+let foo (f : {X, x : X} -> (X -> _) -> _) =
   f {x=42} id
 ```
 
@@ -299,5 +299,33 @@ The limitation of this mechanism is that arguments with non-trivial type
 schemes must be explicitly annotated, as argument `f` in the above example.
 This requirement is standard in languages with Rank-N types.
 
-TODO: describe lambda expressions with named parameters together with the
-rules for implicit variable introduction.
+To pass a function with named parameters as an argument, the programmer can
+use a lambda expression with named parameters. For example, to call the above
+`foo` function with a lambda expression, the following code can be used.
+
+```fram
+foo (fn {x} g => g x)
+```
+
+The programmer can omit some named parameters in the lambda expression. In
+such a case, the omitted parameters will be introduced without giving them
+names, so the programmer would not be able to refer to them within the body
+of the lambda expression.
+
+However, when the lambda abstraction doesn't bind named parameters at all,
+implicit parameters behave differently. In order to mimic the behavior of
+dynamically bound variables, implicit parameters are automatically introduced
+to the context of the lambda body. For example, consider the following code.
+
+```fram
+let logToStdout (f : {~log} -> _) =
+  f {~log=printStrLn}
+
+let _ = logToStdout (fn () =>
+  ~log "Logging to stdout")
+```
+
+In this example, the `~log` parameter is automatically introduced to the body
+of the lambda expression, so the programmer can use it directly. This behavior
+is specific to implicit parameters; other kinds of named parameters must be
+explicitly bound in the lambda abstraction to be used within the body.
