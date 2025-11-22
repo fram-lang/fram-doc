@@ -204,8 +204,8 @@ let doMore {~log} () =
 ```
 
 Same as with other named parameters, the programmer may bind an implicit
-parameter to a different name to avoid name clashes. A binder {~name} is just
-a syntactic sugar for {~name=~name}.
+parameter to a different name to avoid name clashes. A binder `{~name}` is
+just syntactic sugar for `{~name=~name}`.
 
 ```fram
 let doSomethingElse {~log=logger} () =
@@ -279,8 +279,8 @@ let foo {~log} () =
   let bar () = ~log "In bar"
   let baz () = ~log "In baz"; bar ()
   in
-  # the following definition does not have ~log parameter
-  # The ~log here refers to the parameter of foo
+  # the following definition does not have ~log parameter;
+  # the ~log here refers to the parameter of foo
   let quux () = ~log "In quux" in
   bar ()
 ```
@@ -295,7 +295,7 @@ site, which avoids possible ambiguities. On the other hand, this design choice
 implies that functions with named parameters are not truly first-class values:
 they cannot be returned directly from functions. However, Fram allows a form of
 Rank-N types for all kinds of named parameters, so it allows functions with
-named parameters passed as arguments to other functions. For example, the
+named parameters to be passed as arguments to other functions. For example, the
 following function takes a function with named parameters as an argument and
 applies it.
 
@@ -319,11 +319,11 @@ foo (fn {x} g => g x)
 The programmer can omit some named parameters in the lambda expression. In
 such a case, the omitted parameters will be introduced without giving them
 names. For the kinds of named parameters introduced in this section, it means
-that the omitted parameters cannot be referred to within the body of the
-lambda expression. However, these parameters can still be used indirectly by
-the type inference (e.g., variable `x` in the above example has type `X`,
-which is an omitted named type parameter) or the method resolution mechanism
-(described in later sections).
+that the omitted parameters cannot be explicitly referred to within the body
+of the lambda expression. However, these parameters may still be accessible
+indirectly through the type inference (e.g., variable `x` in the above example
+has type `X`, which is an omitted named type parameter) or the method
+resolution mechanism (described in later sections).
 
 When the lambda abstraction doesn't bind named parameters at all, implicit
 parameters behave differently. In order to mimic the behavior of dynamically
