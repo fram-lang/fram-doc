@@ -53,12 +53,12 @@ The type scheme of `const` is `{type A, type B} -> A -> B -> A`.
 
 Type parameters presented in previous section are *anonymous*, i.e., their
 names are not visible outside the definition. Indeed, the programmer has no
-means to specify the names of type parameters implicitly introduced by ML-style
-type inference. However, Fram also supports *named type parameters*, which
-can be explicitly specified by the programmer. To specify a named type
-parameter, the `type` keyword is omitted and only the name of the parameter is
-written within curly braces. For example, the definition of `id` function with
-a named type parameter is as follows.
+means to specify the names of type parameters that were implicitly introduced
+by ML-style type inference. However, Fram also supports *named type
+parameters*, which can be explicitly specified by the programmer. To specify a
+named type parameter, the `type` keyword is omitted and only the name of the
+parameter is written within curly braces. For example, the definition of `id`
+function with a named type parameter is as follows.
 
 ```fram
 # identity function with a type scheme {T} -> T -> T
@@ -87,17 +87,25 @@ let p3 = pair {B=String, A=Int} 42 "abc"
 ```
 
 In rare cases, the programmer may want to give a name to a type parameter
-that is the same as an existing type in the current scope. In order to avoid
-name clashes, the name visible in the scheme might be different from the name
-of the type parameter used within the function body. For example, assume that
-the type `T` is already defined in the current scope. Then, the following
-definition abstracts over a type parameter named `T`, but for the purpose
-of the definition, the type parameter is referred to as `U`.
+that is the same as an existing type in the current scope, and still be able
+to refer to both the existing type and the type parameter within the function
+body. In order to avoid name clashes, the name visible in the scheme can be
+different from the name of the type parameter used within the function body.
+For example, assume that the type `T` is already defined in the current scope.
+Then, the following definition abstracts over a type parameter named `T`, but
+for the purpose of the definition, the type parameter is referred to as `U`,
+while `T` still refers to the existing type.
 
 ```fram
 type T = Int # existing type T
 
 let foo {T=U} (x : T -> U) = x 42
+
+# Almost equivalent definition, but with different name of the type parameter
+let bar {U} (x : T -> U) = x 42
+
+let _ = foo {T=Int} id
+let _ = bar {T=Int} id # Warning: bar doesn't expect T parameter
 ```
 
 The same can be done in type schemes. The type scheme of `foo` is
@@ -310,13 +318,17 @@ foo (fn {x} g => g x)
 
 The programmer can omit some named parameters in the lambda expression. In
 such a case, the omitted parameters will be introduced without giving them
-names, so the programmer would not be able to refer to them within the body
-of the lambda expression.
+names. For the kinds of named parameters introduced in this section, it means
+that the omitted parameters cannot be referred to within the body of the
+lambda expression. However, these parameters can still be used indirectly by
+the type inference (e.g., variable `x` in the above example has type `X`,
+which is an omitted named type parameter) or the method resolution mechanism
+(described in later sections).
 
-However, when the lambda abstraction doesn't bind named parameters at all,
-implicit parameters behave differently. In order to mimic the behavior of
-dynamically bound variables, implicit parameters are automatically introduced
-to the context of the lambda body. For example, consider the following code.
+When the lambda abstraction doesn't bind named parameters at all, implicit
+parameters behave differently. In order to mimic the behavior of dynamically
+bound variables, implicit parameters are automatically introduced to the
+context of the lambda body. For example, consider the following code.
 
 ```fram
 let logToStdout (f : {~log} -> _) =
