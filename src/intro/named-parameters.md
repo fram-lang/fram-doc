@@ -19,11 +19,11 @@ let id x = x
 
 The compiler infers the type of `id` to be `T -> T` for each type `T`.
 To represent such polymorphism over type `T`, the type system assigns
-*type schemes* to variables. The type scheme of `id` function is
+*type schemes* to variables. The type scheme of the `id` function is
 `{type T} -> T -> T`, where the first arrow `{type T} -> ...` binds
 the type parameter `T` in the rest of the type `T -> T`. When a variable
 with a type scheme is used, all parameters within curly braces of the
-type scheme are instantiated. In case of type parameters, the compiler
+type scheme are instantiated. In the case of type parameters, the compiler
 guesses the actual types to be used for instantiation based on the
 context of the usage. For example, the `id` function can be used with
 different types as follows.
@@ -51,14 +51,14 @@ The type scheme of `const` is `{type A, type B} -> A -> B -> A`.
 
 ## Named Type Parameters
 
-Type parameters presented in previous section are *anonymous*, i.e., their
+Type parameters presented in the previous section are *anonymous*, i.e., their
 names are not visible outside the definition. Indeed, the programmer has no
 means to specify the names of type parameters that were implicitly introduced
 by ML-style type inference. However, Fram also supports *named type
 parameters*, which can be explicitly specified by the programmer. To specify a
 named type parameter, the `type` keyword is omitted and only the name of the
-parameter is written within curly braces. For example, the definition of `id`
-function with a named type parameter is as follows.
+parameter is written within curly braces. For example, the definition of the
+`id` function with a named type parameter is as follows.
 
 ```fram
 # identity function with a type scheme {T} -> T -> T
@@ -101,7 +101,7 @@ type T = Int # existing type T
 
 let foo {T=U} (x : T -> U) = x 42
 
-# Almost equivalent definition, but with different name of the type parameter
+# Almost equivalent definition, but with a different name of the type parameter
 let bar {U} (x : T -> U) = x 42
 
 let _ = foo {T=Int} id
@@ -109,10 +109,10 @@ let _ = bar {T=Int} id # Warning: bar doesn't expect T parameter
 ```
 
 The same can be done in type schemes. The type scheme of `foo` is
-`{T=U} -> (T -> U) -> U`. Note that type variable `U` is bound, so it can
+`{T=U} -> (T -> U) -> U`. Note that the type variable `U` is bound, so it can
 be renamed to e.g., `V` (`{T=V} -> (T -> V) -> V`) without changing the
-meaning of the type scheme. Actually, the syntax `{T} -> ...` is just
-a syntactic sugar for `{T=T} -> ...`.
+meaning of the type scheme. In fact, the syntax `{T} -> ...` is just
+syntactic sugar for `{T=T} -> ...`.
 
 ## Regular Named Parameters
 
@@ -150,8 +150,8 @@ let greet {?name} () =
 
 Optional parameters can be omitted when the function is used. In this case,
 the value `None` is passed to the function. When the parameter is specified,
-the value is wrapped in `Some` constructor. Moreover, the programmer can
-pass value of type `Option _` directly, when the name used in the
+the value is wrapped in the `Some` constructor. Moreover, the programmer can
+pass a value of type `Option _` directly, when the name used in the
 instantiation starts with a question mark.
 
 ```fram
@@ -165,7 +165,7 @@ let msg4 = greet {?name=Some "Bob"} () # name is Some "Bob"
 
 Another useful feature of named parameters in Fram is *implicit parameters*.
 Implicit parameters come together with a special namespace for variables,
-that have names starting with a tilde (`~`). Name of implicit parameters also
+which have names starting with a tilde (`~`). Names of implicit parameters also
 start with a tilde, and if not stated otherwise, they bind variables with the
 same names. Implicit parameters can be omitted when the function is used. In
 such a case, the compiler resolves the value of the parameter by searching for
@@ -218,9 +218,9 @@ When programming with named parameters, especially implicit parameters, often
 the same named parameters are passed repeatedly to multiple functions. To
 avoid such boilerplate code, Fram supports *sections*, which allow grouping
 definitions with common named parameters. A named parameter can be declared
-at any point within a section using `parameter` keyword, and will be added
+at any point within a section using the `parameter` keyword, and will be added
 to the type schemes of all following definitions that use this parameter.
-In particular, declared implicit parameter behaves similarly to dynamically
+In particular, a declared implicit parameter behaves similarly to dynamically
 bound variables in Lisp-like languages, but in a type-safe manner.
 
 ```fram
@@ -250,8 +250,8 @@ let doAllIgnoringLogging () =
 
 In the above example, functions `doSomething`, `doMore`, and `doMoreTwice` use
 the implicit parameter `~log` directly or indirectly, so their type schemes
-include `~log` parameter. On the other hand, `doAllIgnoringLogging` doesn't
-have `~log` parameter, because it doesn't use it in its body: it defines a
+include a `~log` parameter. On the other hand, `doAllIgnoringLogging` doesn't
+have a `~log` parameter, because it doesn't use it in its body: it defines a
 local `~log` that shadows the implicit parameter. The parameter construct can
 also be used to declare other kinds of named parameters. For instance, this
 mechanism can be used to name type parameters, but keep the code concise.
@@ -269,17 +269,17 @@ let rec foldLeft (f : Acc -> Elem ->> Acc) acc xs =
 
 The scope of a parameter declaration extends to the end of the current
 section. In most cases it is the end of the current file or module. For local
-definitions within a function body, the scope of parameter declaration extends
+definitions within a function body, the scope of a parameter declaration extends
 to the `in` keyword that ends the block of local definitions.
 
 ```fram
 let foo {~log} () =
   parameter ~log : String ->> Unit
-  # the following two definitions have ~log parameter
+  # the following two definitions have a ~log parameter
   let bar () = ~log "In bar"
   let baz () = ~log "In baz"; bar ()
   in
-  # the following definition does not have ~log parameter;
+  # the following definition does not have a ~log parameter;
   # the ~log here refers to the parameter of foo
   let quux () = ~log "In quux" in
   bar ()
