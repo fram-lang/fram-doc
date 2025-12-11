@@ -84,6 +84,30 @@ Supported identifiers include:
 - `@handler Name`
 - `@module Module`
 
+### ADTs and Records
+
+While documenting all data constructors and named parameters from a single
+docstring is sufficient, it is not always desirable. To make the documentation
+more readable, each data constructor and each named parameter may be annotated
+separately. Every docstring must be indented to match the parameter or
+constructor it refers to. For example:
+```
+## Structure for demonstration purposes
+data MyAwesomeType =
+  ## Empty constructor
+  | CtorA
+  
+  ## Constructor with parameter
+  | CtorB of
+    ## First parameter
+    { param1: Int
+    
+    ## Second parameter
+    , param2: String
+    }
+
+```
+
 ## Guidelines
 
 To ensure good and consistent quality, follow these guidelines:
