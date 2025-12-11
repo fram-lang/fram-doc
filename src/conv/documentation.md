@@ -94,18 +94,19 @@ constructor it refers to. For example:
 ```
 ## Structure for demonstration purposes
 data MyAwesomeType =
+
   ## Empty constructor
   | CtorA
   
   ## Constructor with parameter
   | CtorB of
+
     ## First parameter
     { param1: Int
     
     ## Second parameter
     , param2: String
     }
-
 ```
 
 ## Guidelines
