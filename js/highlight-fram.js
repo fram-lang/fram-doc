@@ -16,9 +16,9 @@ hljs.registerLanguage("fram", function (hljs) {
   return {
     keywords: {
       keyword:
-        "abstr as data effect effrow else end extern finally fn handle handler " +
-        "if implicit import in label let match method module of open pub " +
-        "rec return then type with _",
+        "abstr as data effect else end extern finally fn handle handler if " +
+        "import in label let match method module of open parameter pub rec " +
+        "return section then type with _",
       literal: "True False",
     },
     contains: [
