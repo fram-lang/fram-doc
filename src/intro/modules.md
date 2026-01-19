@@ -189,8 +189,8 @@ end
 ```
 
 When multiple bindings are defined in a single `let` binding via
-pattern-matching, the `pub` keyword makes all of them public. To a more
-fine-grained control over visibility of such variables, you can use mark
+pattern-matching, the `pub` keyword makes all of them public. For more
+fine-grained control over visibility of such variables, you can mark
 any subpattern as public using the `pub` keyword before it. In particular,
 the `pub` keyword can be used before variable names in patterns.
 
@@ -229,7 +229,7 @@ provided methods.
 
 ### Including Modules
 
-The `pub` keyword has a special meaning when is used before an `open`
+The `pub` keyword has a special meaning when it is used before an `open`
 statement. In such a case, all public members of the opened module are
 re-exported as public members of the current module. In case of name clashes,
 the last definition (either defined directly in the module or imported from
