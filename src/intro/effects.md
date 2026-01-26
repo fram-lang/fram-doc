@@ -66,7 +66,7 @@ if:
 Moreover, functional arguments to higher-order functions are considered
 non-total, unless they are explicitly annotated as total. Due to these
 limitations, the user should not expect the compiler to be able to prove
-totality of arbitrary functions. We advise to rely on purity, and treat
+totality of arbitrary functions. We advise relying on purity, and treat
 totality as an internal compiler mechanism.
 
 ## Effect Polymorphism
@@ -151,14 +151,14 @@ for any type `B` and effect `E`. Here, the effect annotation `[IO,E]`
 indicates that this function may have both `IO` and `E` effects.
 Note that the `printStrLn` function has the `IO` effect, but is used in context
 where the `[IO,E]` effect is expected. It is possible to do so thanks to
-*subeffecting*, which allows a function with smaller effect to be used as
-a function with larger effect. In contrast to many other languages with effect
-systems, in Fram effects are compared as sets, meaning that the order of
-effects does not matter, and duplicate effects are ignored. Moreover, effects
-have no tree-like structure, meaning that they are always flattened into a set
-of effect variables/constants. For example, when we substitute effect
-`[F,G,IO]` for effect variable `E` in the effect `[IO,E]`, we get the effect
-`[IO,F,G,IO]`, which is equivalent to `[IO,F,G]`.
+*subeffecting*, which allows a function with a smaller effect to be used as
+a function with a larger effect. In contrast to many other languages with
+effect systems, in Fram effects are compared as sets, meaning that the order
+of effects does not matter, and duplicate effects are ignored. Moreover,
+effects have no tree-like structure, meaning that they are always flattened
+into a set of effect variables/constants. For example, when we substitute
+effect `[F,G,IO]` for effect variable `E` in the effect `[IO,E]`, we get the
+effect `[IO,F,G,IO]`, which is equivalent to `[IO,F,G]`.
 
 ## Effect Inference
 
@@ -190,10 +190,10 @@ let rec map {A, B} (f : A ->> B) (xs : List A) : List B =
 ```
 
 In practice, explicit effect annotations are rarely needed. However, when
-the user defines own datatypes that contain effectful functions as fields, we
-advise to provide explicit effect annotations for such functions, even if
-they can be inferred automatically. This improves code readability, speeds
-up the effect inference process, and helps to catch some mistakes early
+the user defines their own datatypes that contain effectful functions as
+fields, we advise providing explicit effect annotations for such functions,
+even if they can be inferred automatically. This improves code readability,
+speeds up the effect inference process, and helps to catch some mistakes early
 (with more precise error messages).
 
 ### Understanding Effect Inference Errors
