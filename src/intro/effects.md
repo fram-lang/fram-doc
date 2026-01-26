@@ -3,7 +3,7 @@
 Fram is a statically typed programming language. The key feature of Fram's
 type system is that it tracks not only the types of values, but also the
 side effects that expressions may have when evaluated. The role of this
-chapter is to explain basic concepts of Fram's effect system. In
+chapter is to explain basic concepts of Fram's effect system. In the
 [Effect Handlers](intro/effect-handlers.md) chapter, we explain how to define
 and use user-defined effects and effect handlers.
 
@@ -165,7 +165,7 @@ effect `[IO,F,G,IO]`, which is equivalent to `[IO,F,G]`.
 Fram has a very powerful effect inference mechanism, which automatically
 infers effects, relieving the programmer from the burden of annotating
 functions with effects. The effect inference algorithm correctly infers
-effects even in the presence of higher-rank polymorphism (see
+effects even in the presence of higher-rank polymorphism (see the
 [Named Parameters](intro/named-parameters.md) chapter). This means that the
 effect system of Fram is almost completely transparent to the programmer, who
 only needs to understand basic concepts explained in this chapter and use
