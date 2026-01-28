@@ -6,6 +6,7 @@
 
 - [Installation](intro/installation.md)
 - [Getting Started](intro/getting-started.md)
+- [Effects](intro/effects.md)
 - [Named Parameters](intro/named-parameters.md)
 - [Data Types](intro/data-types.md)
 - [Modules](intro/modules.md)
