@@ -589,7 +589,7 @@ some helper function that is not directly defined within the body of the
 `handle` expression. To allow for such use cases, the `effect` abstraction
 can be annotated with an *effect label* that connects it to a specific
 effect handler. Effect labels are first-class values, so they can be passed
-around. For example, we can define helper functions that implements `get`
+around. For example, we can define helper functions that implement `get`
 and `set` operations for the state effect as follows, assuming that the effect
 label `lbl` is passed as an argument.
 ```fram
