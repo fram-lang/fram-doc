@@ -86,7 +86,7 @@ functions that need it, without the need to pass it explicitly.
 parameter ~exn : Exn _
 
 let checkPositive (x : Int) =
-  if x >= 0 then ~exn.raise "negative number"
+  if x < 0 then ~exn.raise "negative number"
 
 let checkAllPositive (xs : List Int) =
   List.iter checkPositive xs
@@ -349,7 +349,7 @@ let statefulLength (xs : List _) =
       }
     return v => fn _ => v
     in
-    xs.iter (fn () => increment cell);
+    xs.iter (fn _ => increment cell);
     cell.get ()
   in
   f 0
@@ -359,7 +359,7 @@ The `get` operation immediately returns a function that takes the current
 value of the state `st`, and resumes the computation with that value. Since
 the resumption contains the entire handler, a call to `resume st` will return
 a function that expects the current state again, so we pass the unchanged
-state as the second argument. The `set` operation is similar: it returns a/
+state as the second argument. The `set` operation is similar: it returns a
 function that discards the current value of state (matched by the wildcard `_`
 pattern), and resumes the computation with the unit value, passing the new
 state `st` as the second argument. When the computation being handled
@@ -384,7 +384,7 @@ let statefulLength (xs : List _) =
   return v => fn _ => v
   finally f => f 0
   in
-  xs.iter (fn () => increment cell);
+  xs.iter (fn _ => increment cell);
   cell.get ()
 ```
 
@@ -455,7 +455,7 @@ let allTriples n =
 
 let statefulLength (xs : List _) =
   handle cell with hState 0 in
-  xs.iter (fn () => increment cell);
+  xs.iter (fn _ => increment cell);
   cell.get ()
 ```
 
@@ -490,7 +490,7 @@ backtracking effects.
 ```fram
 let example n =
   handle cell with hState 0
-  handle ~bt with bBT_all
+  handle ~bt with hBT_all
   in
   triples n;
   increment cell;
@@ -503,7 +503,7 @@ which results in a list of consecutive integers from `1` to the number of
 found triples. However, if we swap the order of the handlers as follows,
 ```fram
 let example n =
-  handle ~bt with bBT_all
+  handle ~bt with hBT_all
   handle cell with hState 0
   in
   triples n;
@@ -602,7 +602,7 @@ let defaultSet lbl =
 
 To use such helper functions within an effect handler, we need to pass the
 effect label corresponding to the handler. In Fram, each handler introduces
-its own effect label, and bounds it to a special implicit `~label`. Thus,
+its own effect label, and binds it to a special implicit `~label`. Thus,
 we can rewrite the `hState` first-class handler as follows.
 ```fram
 let hState init =
