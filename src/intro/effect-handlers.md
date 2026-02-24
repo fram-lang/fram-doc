@@ -171,11 +171,10 @@ rest of the list, we call `resume ()`, which resumes the computation of the
 generator from the point where it yielded the value `x`. The `resume` function
 takes an argument of type `Unit` in this case, because the `Unit` type is the
 return type of the `yield` function. Fram implements so-called *deep
-handlers*, meaning that the resumption contains the entire handler, so any
-subsequent effects raised during the resumed computation will be interpreted
-within the call to `resume`. In this case, it means that values yielded
-during the resumed computation will also be handled by the same `yield`
-handler but they will be placed after `x` in the resulting list.
+handlers*, which means that subsequent uses of `yield` will be handled by the
+same handler, but executed in the call site of the `resume` function.
+Therefore, the values yielded during the resumed computation will be placed
+after `x` in the resulting list.
 
 After defining the effect handler, we call the `run` method of the generator,
 passing the `yield` effect capability as an argument. Finally, after the
