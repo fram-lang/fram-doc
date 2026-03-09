@@ -105,7 +105,7 @@ contain constructors that refer to the same data type. For example, a
 binary tree can be defined as follows.
 
 ```fram
-data Tree X =
+data rec Tree X =
   | Leaf
   | Node of Tree, X, Tree
 ```
@@ -204,9 +204,9 @@ sequence of definitions.
 ```fram
 data Vec3D T = Vec3D of { x : T, y : T, z : T }
 
-method x (Vec2D { x }) = x
-method y (Vec2D { y }) = y
-method z (Vec2D { z }) = z
+method x (Vec3D { x }) = x
+method y (Vec3D { y }) = y
+method z (Vec3D { z }) = z
 ```
 
 Therefore, records can be used in a similar way as records in other
