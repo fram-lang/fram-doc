@@ -107,7 +107,7 @@ binary tree can be defined as follows.
 ```fram
 data rec Tree X =
   | Leaf
-  | Node of Tree, X, Tree
+  | Node of Tree X, X, Tree X
 ```
 
 Note that recursive data types must be explicitly marked using the `rec`
