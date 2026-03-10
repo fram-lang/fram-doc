@@ -4,6 +4,7 @@ description = "The documentation for the Fram programming language."
 language = "en"
 
 [preprocessor.katex]
+optional = true
 after = ["links"]
 
 [output.html]
