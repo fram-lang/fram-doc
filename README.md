@@ -2,7 +2,7 @@ The Fram Language
 =================
 
 This repository contains the source files for the Fram language documentation,
-which is currently hosted at [fram-lang.org](https://fram-lang.org/).
+which is currently hosted at [doc.fram-lang.org](https://doc.fram-lang.org/).
 
 Contributing
 ------------
